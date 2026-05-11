@@ -4,8 +4,8 @@ import Icon from "./Icon.astro";
 const nav = [
   { label: "Behandelingen", href: "/behandelingen" },
   { label: "Trainingscentrum", href: "/trainingscentrum" },
-  { label: "Het team", href: "/#team" },
-  { label: "Tarieven", href: "/#tarieven" },
+  { label: "Het team", href: "/demo#team" },
+  { label: "Tarieven", href: "/demo#tarieven" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -18,7 +18,7 @@ const pathname = Astro.url.pathname;
       class="mt-3 md:mt-5 flex items-center justify-between gap-4 px-4 md:px-6 py-3 md:py-4 rounded-full bg-cream/85 backdrop-blur-md border border-line/60 shadow-[0_8px_30px_-12px_rgba(26,20,17,0.15)]"
       data-header-inner
     >
-      <a href="/" class="flex items-center gap-3 group" aria-label="ProHair home">
+      <a href="/demo" class="flex items-center gap-3 group" aria-label="ProHair home">
         <img src="/brand/prohair-logo.png" alt="ProHair" class="h-6 md:h-7 w-auto" />
         <span class="hidden md:inline text-[10px] uppercase tracking-[0.22em] text-ink-soft border-l border-line pl-3">Kapsalon & Trainingscentrum</span>
       </a>
@@ -50,7 +50,7 @@ const pathname = Astro.url.pathname;
   </div>
 
   <div
-    class="fixed inset-0 z-[60] bg-ink text-cream translate-y-[-100%] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden"
+    class="mobile-menu fixed inset-0 z-[60] bg-ink text-cream transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden"
     data-mobile-menu
   >
     <div class="container-prohair h-full flex flex-col">
@@ -103,17 +103,28 @@ const pathname = Astro.url.pathname;
 
   const openMenu = () => {
     if (!menu) return;
-    menu.style.transform = "translateY(0)";
-    menu.style.opacity = "1";
+    menu.classList.add("is-open");
     document.body.style.overflow = "hidden";
   };
   const closeMenu = () => {
     if (!menu) return;
-    menu.style.transform = "translateY(-100%)";
-    menu.style.opacity = "0";
+    menu.classList.remove("is-open");
     document.body.style.overflow = "";
   };
   toggle?.addEventListener("click", openMenu);
   close?.addEventListener("click", closeMenu);
   menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMenu));
 </script>
+
+<style>
+  .mobile-menu {
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+  }
+  .mobile-menu.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+</style>
