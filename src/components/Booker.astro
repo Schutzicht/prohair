@@ -1,0 +1,446 @@
+---
+import Icon from "./Icon.astro";
+import { services, team, prices } from "../data/salon";
+
+const bookerServices = services.map((s) => {
+  const priceRow = prices.find((p) => p.service.toLowerCase().includes(s.title.toLowerCase().split(" ")[0]));
+  return {
+    slug: s.slug,
+    title: s.title,
+    icon: s.icon,
+    duration: priceRow?.duration ?? "30 min",
+    from: priceRow?.from ?? "—",
+  };
+});
+
+const bookerTeam = team.filter((m: any) => !m.isMascot);
+
+const slots = ["09:30", "10:15", "11:00", "11:45", "13:00", "13:45", "14:30", "15:15", "16:00", "16:45", "17:30", "18:15", "19:00", "19:45"];
+const taken = new Set(["10:15", "13:45", "16:45", "19:00"]);
+---
+
+<div class="bg-cream-2 rounded-jumbo border border-line/60 overflow-hidden" data-booker>
+  <div class="px-5 md:px-8 pt-5 md:pt-6 pb-4 border-b border-line/50 bg-cream">
+    <div class="flex items-center justify-between gap-3 mb-4">
+      <p class="eyebrow">Afspraak inplannen</p>
+      <span class="text-[11px] uppercase tracking-[0.18em] text-ink-soft" data-step-count>Stap 1 / 5</span>
+    </div>
+    <div class="flex gap-1.5" role="progressbar" aria-label="Voortgang">
+      {[0,1,2,3,4].map((i) => (
+        <span class="flex-1 h-1.5 rounded-full bg-line transition-colors duration-500" data-step-dot={i}></span>
+      ))}
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-12">
+    <div class="lg:col-span-8 p-5 md:p-8 min-h-[420px]">
+      <section data-step="0" data-active>
+        <p class="text-[12px] uppercase tracking-[0.18em] text-ink-soft mb-2">Stap 1</p>
+        <h3 class="font-display text-3xl md:text-[40px] leading-tight mb-2">Welke behandeling?</h3>
+        <p class="text-[14px] text-ink-soft mb-6">Kies wat het dichtst in de buurt komt. Tijdens de intake bepalen we de exacte invulling.</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          {bookerServices.map((s) => (
+            <button
+              type="button"
+              class="group text-left p-4 rounded-card border border-line/70 bg-cream hover:border-ink transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-ink"
+              data-pick="service"
+              data-value={s.slug}
+              data-label={s.title}
+              data-duration={s.duration}
+              data-from={s.from}
+            >
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <span class="w-9 h-9 rounded-full bg-cream-2 group-hover:bg-ink group-hover:text-cream inline-flex items-center justify-center transition-colors">
+                  <Icon name={s.icon as any} size={16}/>
+                </span>
+                <span class="text-[11px] uppercase tracking-[0.15em] text-ink-soft">{s.duration}</span>
+              </div>
+              <p class="font-display text-xl leading-tight">{s.title}</p>
+              <p class="text-[12px] text-ink-soft mt-1">vanaf &euro;{s.from}</p>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section data-step="1" hidden>
+        <p class="text-[12px] uppercase tracking-[0.18em] text-ink-soft mb-2">Stap 2</p>
+        <h3 class="font-display text-3xl md:text-[40px] leading-tight mb-2">Bij wie wil je terecht?</h3>
+        <p class="text-[14px] text-ink-soft mb-6">Of laat het ons kiezen op basis van beschikbaarheid.</p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <button
+            type="button"
+            class="group text-left p-3 rounded-card border border-line/70 bg-cream hover:border-ink transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-ink"
+            data-pick="stylist"
+            data-value="geen"
+            data-label="Geen voorkeur"
+          >
+            <div class="aspect-[1/1] rounded-[12px] bg-cream-2 mb-3 flex items-center justify-center text-ink-soft">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="9" cy="8" r="3.5"/><circle cx="16" cy="10" r="2.5"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5"/><path d="M14 18c0-2 2-3 4-3s3 1 3 3"/></svg>
+            </div>
+            <p class="font-display text-lg leading-none">Geen voorkeur</p>
+            <p class="text-[11px] text-ink-soft mt-1.5">Snelste mogelijkheid</p>
+          </button>
+          {bookerTeam.map((m) => (
+            <button
+              type="button"
+              class="group text-left p-3 rounded-card border border-line/70 bg-cream hover:border-ink transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-ink"
+              data-pick="stylist"
+              data-value={m.name.toLowerCase()}
+              data-label={m.name}
+            >
+              <div class="aspect-[1/1] rounded-[12px] overflow-hidden mb-3 bg-cream-2">
+                <img src={m.image} alt={m.name} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy"/>
+              </div>
+              <p class="font-display text-lg leading-none">{m.name}</p>
+              <p class="text-[11px] text-ink-soft mt-1.5">{m.role}</p>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section data-step="2" hidden>
+        <p class="text-[12px] uppercase tracking-[0.18em] text-ink-soft mb-2">Stap 3</p>
+        <h3 class="font-display text-3xl md:text-[40px] leading-tight mb-2">Welke dag past?</h3>
+        <p class="text-[14px] text-ink-soft mb-6">Dinsdagen en zondagen zijn we gesloten.</p>
+
+        <div class="flex items-center justify-between mb-4">
+          <button type="button" class="w-9 h-9 rounded-full border border-line/70 inline-flex items-center justify-center hover:bg-ink hover:text-cream hover:border-ink transition-colors" data-cal-prev aria-label="Vorige maand">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <p class="font-display text-xl" data-cal-title>—</p>
+          <button type="button" class="w-9 h-9 rounded-full border border-line/70 inline-flex items-center justify-center hover:bg-ink hover:text-cream hover:border-ink transition-colors" data-cal-next aria-label="Volgende maand">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-7 gap-1 mb-2 text-[10px] uppercase tracking-[0.12em] text-ink-soft text-center">
+          <span>Ma</span><span>Di</span><span>Wo</span><span>Do</span><span>Vr</span><span>Za</span><span>Zo</span>
+        </div>
+        <div class="grid grid-cols-7 gap-1" data-cal-grid></div>
+      </section>
+
+      <section data-step="3" hidden>
+        <p class="text-[12px] uppercase tracking-[0.18em] text-ink-soft mb-2">Stap 4</p>
+        <h3 class="font-display text-3xl md:text-[40px] leading-tight mb-2">Welk tijdstip?</h3>
+        <p class="text-[14px] text-ink-soft mb-6">Doorgestreepte tijden zijn al bezet.</p>
+        <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
+          {slots.map((t) => (
+            <button
+              type="button"
+              class={`px-3 py-3 rounded-card border text-[14px] font-medium transition-all duration-200 ${taken.has(t)
+                ? 'border-line/40 bg-cream/50 text-ink-soft/60 line-through cursor-not-allowed pointer-events-none'
+                : 'border-line/70 bg-cream hover:border-ink hover:bg-ink hover:text-cream focus:outline-none focus:ring-2 focus:ring-ink'}`}
+              data-pick={taken.has(t) ? "" : "time"}
+              data-value={t}
+              data-label={t}
+              disabled={taken.has(t)}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section data-step="4" hidden>
+        <p class="text-[12px] uppercase tracking-[0.18em] text-ink-soft mb-2">Stap 5</p>
+        <h3 class="font-display text-3xl md:text-[40px] leading-tight mb-2">Jouw gegevens</h3>
+        <p class="text-[14px] text-ink-soft mb-6">We bevestigen je afspraak binnen een werkdag, telefonisch of per e-mail.</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <label class="flex flex-col gap-1.5">
+            <span class="text-[11px] uppercase tracking-[0.18em] text-ink-soft">Voornaam</span>
+            <input type="text" required data-field="firstname" class="bg-cream rounded-full px-5 py-3 text-[15px] border border-line/60 focus:border-ink outline-none transition-colors"/>
+          </label>
+          <label class="flex flex-col gap-1.5">
+            <span class="text-[11px] uppercase tracking-[0.18em] text-ink-soft">Achternaam</span>
+            <input type="text" data-field="lastname" class="bg-cream rounded-full px-5 py-3 text-[15px] border border-line/60 focus:border-ink outline-none transition-colors"/>
+          </label>
+          <label class="flex flex-col gap-1.5">
+            <span class="text-[11px] uppercase tracking-[0.18em] text-ink-soft">Telefoon</span>
+            <input type="tel" required data-field="phone" class="bg-cream rounded-full px-5 py-3 text-[15px] border border-line/60 focus:border-ink outline-none transition-colors"/>
+          </label>
+          <label class="flex flex-col gap-1.5">
+            <span class="text-[11px] uppercase tracking-[0.18em] text-ink-soft">E-mail</span>
+            <input type="email" required data-field="email" class="bg-cream rounded-full px-5 py-3 text-[15px] border border-line/60 focus:border-ink outline-none transition-colors"/>
+          </label>
+          <label class="flex flex-col gap-1.5 sm:col-span-2">
+            <span class="text-[11px] uppercase tracking-[0.18em] text-ink-soft">Iets specifieks (optioneel)</span>
+            <textarea rows="3" data-field="note" class="bg-cream rounded-card px-5 py-3 text-[14px] border border-line/60 focus:border-ink outline-none transition-colors resize-none" placeholder="Bijvoorbeeld: huidige haarlengte, gewenst resultaat."></textarea>
+          </label>
+        </div>
+        <label class="flex items-start gap-3 mt-5 text-[12px] text-ink-soft">
+          <input type="checkbox" required data-field="agree" class="mt-0.5"/>
+          <span>Ik begrijp dat ProHair contact opneemt om mijn aanvraag te bevestigen. Mijn gegevens worden niet gebruikt voor marketingdoeleinden.</span>
+        </label>
+      </section>
+
+      <section data-step="success" hidden>
+        <div class="text-center py-8 md:py-12">
+          <div class="w-16 h-16 mx-auto rounded-full bg-ink text-cream inline-flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <h3 class="font-display text-3xl md:text-[44px] leading-tight">Aanvraag binnen.</h3>
+          <p class="mt-4 text-[15px] text-ink-soft max-w-md mx-auto leading-[1.65]">
+            Bedankt! Wij nemen binnen een werkdag contact op om jouw afspraak te bevestigen. De koffie staat al voor je klaar.
+          </p>
+          <div class="mt-6 inline-flex flex-wrap gap-3 justify-center">
+            <a href="/" class="btn-ghost">Terug naar home</a>
+            <button type="button" class="btn-primary" data-restart>Nog een afspraak <Icon name="arrow" size={16}/></button>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-8 flex items-center justify-between gap-3 pt-6 border-t border-line/60" data-nav>
+        <button type="button" class="text-[14px] text-ink-soft hover:text-ink inline-flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed" data-back>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
+          Terug
+        </button>
+        <button type="button" class="btn-primary disabled:opacity-40 disabled:cursor-not-allowed" data-next>
+          Volgende <Icon name="arrow" size={16}/>
+        </button>
+      </div>
+    </div>
+
+    <aside class="lg:col-span-4 bg-ink text-cream p-5 md:p-8 lg:rounded-r-jumbo">
+      <p class="eyebrow !text-cream/55 mb-4">Jouw afspraak</p>
+      <p class="font-display text-2xl md:text-[28px] leading-tight mb-6">
+        <em class="italic text-copper-soft">Samenvatting</em><br/>op een rij.
+      </p>
+      <dl class="space-y-4 text-[14px]">
+        <div>
+          <dt class="text-[10px] uppercase tracking-[0.18em] text-cream/55 mb-1">Behandeling</dt>
+          <dd class="text-cream" data-sum="service">—</dd>
+          <dd class="text-cream/55 text-[12px]" data-sum="serviceMeta"></dd>
+        </div>
+        <div class="border-t border-cream/15 pt-4">
+          <dt class="text-[10px] uppercase tracking-[0.18em] text-cream/55 mb-1">Stylist</dt>
+          <dd class="text-cream" data-sum="stylist">—</dd>
+        </div>
+        <div class="border-t border-cream/15 pt-4">
+          <dt class="text-[10px] uppercase tracking-[0.18em] text-cream/55 mb-1">Datum</dt>
+          <dd class="text-cream" data-sum="date">—</dd>
+        </div>
+        <div class="border-t border-cream/15 pt-4">
+          <dt class="text-[10px] uppercase tracking-[0.18em] text-cream/55 mb-1">Tijd</dt>
+          <dd class="text-cream" data-sum="time">—</dd>
+        </div>
+      </dl>
+      <div class="mt-8 pt-6 border-t border-cream/15 text-[12px] text-cream/55 leading-[1.6]">
+        <p>Geen aanbetaling vooraf. Afzeggen kan kosteloos tot 24 uur van tevoren.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-booker]");
+  if (root) {
+    const sections = Array.from(root.querySelectorAll<HTMLElement>("[data-step]"));
+    const dots = Array.from(root.querySelectorAll<HTMLElement>("[data-step-dot]"));
+    const stepCount = root.querySelector<HTMLElement>("[data-step-count]");
+    const nav = root.querySelector<HTMLElement>("[data-nav]");
+    const nextBtn = root.querySelector<HTMLButtonElement>("[data-next]");
+    const backBtn = root.querySelector<HTMLButtonElement>("[data-back]");
+    const calGrid = root.querySelector<HTMLElement>("[data-cal-grid]");
+    const calTitle = root.querySelector<HTMLElement>("[data-cal-title]");
+    const calPrev = root.querySelector<HTMLButtonElement>("[data-cal-prev]");
+    const calNext = root.querySelector<HTMLButtonElement>("[data-cal-next]");
+    const restart = root.querySelector<HTMLButtonElement>("[data-restart]");
+
+    type State = { step: number; service: any; stylist: any; date: any; time: any; calMonth: Date; };
+    const state: State = {
+      step: 0,
+      service: null,
+      stylist: null,
+      date: null,
+      time: null,
+      calMonth: new Date(),
+    };
+
+    const NL_MONTHS = ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
+    const NL_DAYS = ["zondag","maandag","dinsdag","woensdag","donderdag","vrijdag","zaterdag"];
+
+    function showStep(i: number | "success") {
+      sections.forEach((s) => { s.hidden = s.dataset.step !== String(i); });
+      if (typeof i === "number") {
+        state.step = i;
+        dots.forEach((d, idx) => {
+          d.style.backgroundColor = idx <= i ? "var(--color-ink)" : "var(--color-line)";
+        });
+        if (stepCount) stepCount.textContent = `Stap ${i + 1} / 5`;
+        if (nav) nav.style.display = "flex";
+        if (backBtn) backBtn.disabled = i === 0;
+        if (nextBtn) {
+          nextBtn.disabled = !canAdvance(i);
+          nextBtn.innerHTML = i === 4
+            ? `Bevestig aanvraag <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>`
+            : `Volgende <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>`;
+        }
+      } else {
+        if (nav) nav.style.display = "none";
+        dots.forEach((d) => { d.style.backgroundColor = "var(--color-copper)"; });
+        if (stepCount) stepCount.textContent = "Klaar";
+      }
+    }
+
+    function canAdvance(i: number) {
+      if (i === 0) return !!state.service;
+      if (i === 1) return !!state.stylist;
+      if (i === 2) return !!state.date;
+      if (i === 3) return !!state.time;
+      if (i === 4) {
+        const fn = root!.querySelector<HTMLInputElement>('[data-field="firstname"]');
+        const ph = root!.querySelector<HTMLInputElement>('[data-field="phone"]');
+        const em = root!.querySelector<HTMLInputElement>('[data-field="email"]');
+        const ag = root!.querySelector<HTMLInputElement>('[data-field="agree"]');
+        return !!(fn?.value && ph?.value && em?.value && ag?.checked);
+      }
+      return false;
+    }
+
+    function refreshNext() {
+      if (nextBtn) nextBtn.disabled = !canAdvance(state.step);
+    }
+
+    function setSummary(key: string, value: string) {
+      const el = root!.querySelector<HTMLElement>(`[data-sum="${key}"]`);
+      if (el) el.textContent = value || "—";
+    }
+
+    function clearPickStyles(group: string) {
+      root!.querySelectorAll<HTMLElement>(`[data-pick="${group}"]`).forEach((b) => {
+        b.classList.remove("bg-ink", "text-cream", "border-ink");
+        b.classList.add("bg-cream");
+      });
+    }
+
+    root.addEventListener("click", (e) => {
+      const target = (e.target as HTMLElement).closest<HTMLElement>("[data-pick]");
+      if (!target) return;
+      const group = target.dataset.pick!;
+      const value = target.dataset.value!;
+      const label = target.dataset.label || value;
+
+      if (group === "service") {
+        clearPickStyles("service");
+        target.classList.add("bg-ink", "text-cream", "border-ink");
+        target.classList.remove("bg-cream");
+        state.service = { value, label, duration: target.dataset.duration, from: target.dataset.from };
+        setSummary("service", label);
+        setSummary("serviceMeta", `${target.dataset.duration} · vanaf €${target.dataset.from}`);
+      } else if (group === "stylist") {
+        clearPickStyles("stylist");
+        target.classList.add("bg-ink", "text-cream", "border-ink");
+        target.classList.remove("bg-cream");
+        state.stylist = { value, label };
+        setSummary("stylist", label);
+      } else if (group === "time") {
+        clearPickStyles("time");
+        target.classList.add("bg-ink", "text-cream", "border-ink");
+        target.classList.remove("bg-cream");
+        state.time = { value, label };
+        setSummary("time", label);
+      }
+      refreshNext();
+    });
+
+    function renderCalendar() {
+      if (!calGrid || !calTitle) return;
+      const m = state.calMonth;
+      const year = m.getFullYear();
+      const month = m.getMonth();
+      calTitle.textContent = `${NL_MONTHS[month]} ${year}`;
+
+      const firstOfMonth = new Date(year, month, 1);
+      let startWeekday = firstOfMonth.getDay() - 1;
+      if (startWeekday < 0) startWeekday = 6;
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      calGrid.innerHTML = "";
+      for (let i = 0; i < startWeekday; i++) {
+        const blank = document.createElement("div");
+        blank.className = "h-10";
+        calGrid.appendChild(blank);
+      }
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(year, month, d);
+        const dow = date.getDay();
+        const isClosed = dow === 0 || dow === 2;
+        const isPast = date < today;
+        const isSelected = state.date && state.date.iso === date.toISOString().slice(0,10);
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = String(d);
+        btn.className = "h-10 rounded-full text-[14px] flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-ink";
+
+        if (isPast || isClosed) {
+          btn.className += " text-ink-soft/40 cursor-not-allowed line-through";
+          btn.disabled = true;
+        } else if (isSelected) {
+          btn.className += " bg-ink text-cream";
+        } else {
+          btn.className += " hover:bg-ink hover:text-cream text-ink";
+        }
+
+        btn.addEventListener("click", () => {
+          if (btn.disabled) return;
+          const iso = date.toISOString().slice(0,10);
+          const label = `${NL_DAYS[dow]} ${d} ${NL_MONTHS[month]}`;
+          state.date = { iso, label };
+          setSummary("date", label);
+          renderCalendar();
+          refreshNext();
+        });
+
+        calGrid.appendChild(btn);
+      }
+    }
+
+    calPrev?.addEventListener("click", () => {
+      state.calMonth = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() - 1, 1);
+      renderCalendar();
+    });
+    calNext?.addEventListener("click", () => {
+      state.calMonth = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() + 1, 1);
+      renderCalendar();
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      if (!canAdvance(state.step)) return;
+      if (state.step === 4) {
+        showStep("success");
+      } else {
+        showStep(state.step + 1);
+        if (state.step === 2) renderCalendar();
+      }
+    });
+    backBtn?.addEventListener("click", () => {
+      if (state.step > 0) showStep(state.step - 1);
+    });
+
+    root.querySelectorAll<HTMLInputElement>("[data-field]").forEach((input) => {
+      input.addEventListener("input", refreshNext);
+      input.addEventListener("change", refreshNext);
+    });
+
+    restart?.addEventListener("click", () => {
+      state.service = null;
+      state.stylist = null;
+      state.date = null;
+      state.time = null;
+      clearPickStyles("service");
+      clearPickStyles("stylist");
+      clearPickStyles("time");
+      root.querySelectorAll<HTMLInputElement>("[data-field]").forEach((el) => {
+        if (el.type === "checkbox") el.checked = false; else el.value = "";
+      });
+      ["service","serviceMeta","stylist","date","time"].forEach((k) => setSummary(k, ""));
+      showStep(0);
+    });
+
+    showStep(0);
+    renderCalendar();
+  }
+</script>

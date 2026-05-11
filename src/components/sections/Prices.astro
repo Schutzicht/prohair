@@ -1,0 +1,47 @@
+---
+import Icon from "../Icon.astro";
+import { prices } from "../../data/salon";
+---
+
+<section id="tarieven" class="py-24 md:py-32 bg-ink text-cream relative overflow-hidden">
+  <div aria-hidden="true" class="absolute bottom-0 left-1/3 w-[520px] h-[520px] rounded-full bg-copper/15 blur-[160px]"></div>
+
+  <div class="container-prohair relative">
+    <div class="grid lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-4" data-reveal>
+        <p class="eyebrow !text-cream/55 mb-5">Tarieven</p>
+        <h2 class="font-display text-[40px] sm:text-[56px] md:text-[68px] leading-[0.96]">
+          Eerlijk en<br/>
+          <em class="italic text-copper-soft">helder.</em>
+        </h2>
+        <p class="mt-6 text-cream/65 text-[15px] leading-[1.7] max-w-sm">
+          Prijzen inclusief btw, geldig vanaf 1 januari 2025. De exacte prijs hangt af van haarlengte, dikte en uitgroei. Voor een lange-haar permanent geldt een toeslag voor extra vloeistof.
+        </p>
+        <p class="mt-4 text-cream/65 text-[14px] leading-[1.7] max-w-sm">
+          Voor extra kleurproduct rekenen we &euro;7,50 per tube. Geen verrassingen achteraf, dat spreken we vooraf met je af.
+        </p>
+      </div>
+
+      <div class="lg:col-span-8" data-reveal>
+        <div class="rounded-jumbo border border-cream/15 overflow-hidden">
+          {prices.map((p, i) => (
+            <div class={`flex items-center justify-between gap-4 px-5 md:px-8 py-5 md:py-6 ${i !== prices.length - 1 ? 'border-b border-cream/10' : ''} hover:bg-cream/5 transition-colors`}>
+              <div class="flex-1 min-w-0">
+                <p class="font-display text-[20px] md:text-[24px] leading-tight">{p.service}</p>
+                <p class="text-[11px] uppercase tracking-[0.16em] text-cream/45 mt-1">{p.duration}</p>
+              </div>
+              <div class="text-right shrink-0">
+                <p class="text-[10px] uppercase tracking-[0.18em] text-cream/45">vanaf</p>
+                <p class="font-display text-[24px] md:text-[28px] text-copper-soft leading-none">&euro;{p.from}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/contact" class="btn-primary !bg-cream !text-ink hover:!bg-copper-soft">Ik wil een afspraak maken <Icon name="arrow" size={16}/></a>
+          <a href="/behandelingen" class="btn-ghost !border-cream/30 !text-cream hover:!bg-cream hover:!text-ink">Volledige tarievenlijst</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

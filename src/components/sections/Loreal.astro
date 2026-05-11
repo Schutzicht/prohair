@@ -1,0 +1,56 @@
+---
+import Icon from "../Icon.astro";
+---
+
+<section class="py-24 md:py-32 bg-ink text-cream relative overflow-hidden">
+  <div aria-hidden="true" class="absolute -top-40 -right-40 w-[680px] h-[680px] rounded-full bg-copper-deep/30 blur-[180px]"></div>
+
+  <div class="container-prohair relative">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+      <div class="lg:col-span-6 relative" data-reveal>
+        <div class="aspect-[4/5] rounded-jumbo overflow-hidden image-grain bg-ink-2">
+          <img
+            src="/team/kapsalon_prohair_ashley.jpg"
+            alt="ProHair stylist met L'Oreal Professionnel"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div class="absolute -bottom-6 -right-6 bg-cream text-ink rounded-card px-5 py-4 max-w-[260px] shadow-xl hidden sm:block">
+          <p class="font-display text-2xl leading-tight">Houdbaarheid, <em class="italic text-copper">glans</em> en verzorging.</p>
+          <p class="text-[12px] text-ink-soft mt-2">Drie dingen die we samen met L'Oreal garanderen.</p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6" data-reveal>
+        <p class="eyebrow !text-cream/60 mb-5">Onze partners</p>
+        <h2 class="font-display text-[44px] sm:text-[60px] md:text-[80px] leading-[0.94]">
+          L'Oreal <em class="italic text-copper-soft">Professionnel</em><br/>
+          en Pivot Point.
+        </h2>
+        <p class="mt-7 max-w-xl text-cream/75 text-[16px] leading-[1.7]">
+          We werken bewust met merken die ons vakmanschap versterken. L'Oreal Professionnel staat voor producten die je haar voeden en je kleur lang laten leven. Pivot Point is de methode die ons leert vanuit vorm te denken, met 50+ jaar internationale ervaring.
+        </p>
+
+        <div class="mt-10 grid sm:grid-cols-3 gap-5">
+          <div class="border-t border-cream/15 pt-4">
+            <p class="font-display text-3xl">L'Oreal</p>
+            <p class="text-[12px] uppercase tracking-[0.15em] text-cream/55 mt-2">Kleur & verzorging</p>
+          </div>
+          <div class="border-t border-cream/15 pt-4">
+            <p class="font-display text-3xl">Pivot<br/>Point</p>
+            <p class="text-[12px] uppercase tracking-[0.15em] text-cream/55 mt-2">Knipmethode</p>
+          </div>
+          <div class="border-t border-cream/15 pt-4">
+            <p class="font-display text-3xl">Intern</p>
+            <p class="text-[12px] uppercase tracking-[0.15em] text-cream/55 mt-2">Eigen scholingsprogramma</p>
+          </div>
+        </div>
+
+        <div class="mt-12">
+          <a href="/behandelingen#kleur" class="link-arrow !text-cream !border-cream/30 hover:!border-cream">Bekijk kleurbehandelingen <Icon name="arrow" size={14}/></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

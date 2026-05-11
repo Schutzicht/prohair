@@ -1,0 +1,149 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { services } from "../data/salon";
+
+const detailed = [
+  {
+    slug: "knippen",
+    sub: [
+      { name: "Knippen modelleren", from: "32,50", desc: "Coupe volgens Pivot Point methode, inclusief wassen en stylen." },
+      { name: "Knippen + föhnen met ronde borstels", from: "52,50", desc: "Volledige styling na de coupe." },
+      { name: "Föhnen, styling", from: "26,00", desc: "Tussendoor zonder coupe." },
+      { name: "Opsteken (half uur)", from: "32,00", desc: "Bijvoorbeeld voor feest of zakelijk." },
+      { name: "Knippen kind t/m 5 jaar", from: "26,00", desc: "Rustig tempo, kindvriendelijke aanpak." },
+      { name: "Krullen knippen, masker, diffuser", from: "48,00", desc: "Speciale curve techniek voor natuurlijke krul." },
+      { name: "Kroeshaar spijken en knippen", from: "39,00", desc: "Zonder wassen vooraf." },
+      { name: "Coupe binnen 3 weken bijwerken", from: "18,00", desc: "Voor wie scherp wil blijven tussen afspraken." },
+      { name: "Contouren coupe bijwerken", from: "12,50", desc: "Snel netjes maken." },
+    ],
+  },
+  {
+    slug: "kleur",
+    sub: [
+      { name: "Kleurbehandeling, knippen & styling", from: "84,00", desc: "Volledig pakket, inclusief afsluitende styling." },
+      { name: "Kleurbehandeling & styling", from: "64,00", desc: "Zonder knipbeurt." },
+      { name: "Mini kleurbehandeling", from: "32,00", desc: "'Zicht'-grijs aan contouren wegwerken, 1/4 tube." },
+      { name: "Toner Refresh lang haar", from: "43,50", desc: "Kleuropfrissing en verzorging." },
+      { name: "Toner Refresh kort haar", from: "43,00", desc: "Glans en verfrissing voor je kleur." },
+      { name: "Toeslag extra kleurproduct (per tube)", from: "7,50", desc: "Voor dik of lang haar." },
+    ],
+  },
+  {
+    slug: "permanent",
+    sub: [
+      { name: "Permanent, knippen & styling", from: "111,00", desc: "Volledige permanent met afsluitende coupe." },
+      { name: "Deelpermanent, knippen & styling", from: "121,00", desc: "Voor extra volume aan de bovenkant." },
+      { name: "Toeslag lang haar", from: "16,00", desc: "Extra permanentvloeistof voor lange lengtes." },
+    ],
+  },
+  {
+    slug: "verzorging",
+    sub: [
+      { name: "Wassen, hoofdmassage & masker", from: "20,00", desc: "Inclusief warme handdoek." },
+      { name: "Haarherstellende kuur", from: "20,00", desc: "Met hoofdmassage, masker en warme handdoek." },
+      { name: "Muru muru boter prewash", from: "10,00", desc: "Diepe voeding vooraf aan je behandeling." },
+      { name: "Epileren & kleuren wenkbrauwen", from: "17,00", desc: "Inclusief vormadvies." },
+    ],
+  },
+  {
+    slug: "heren",
+    sub: [
+      { name: "Combinatie knippen en scheren", from: "55,00", desc: "Coupe plus volledige scheerbeurt." },
+      { name: "Combinatie knippen + baard trimmen + contour-shave", from: "55,00", desc: "Compleet onderhoud in een sessie." },
+      { name: "Baard trimmen & contour-shave", from: "26,50", desc: "Baard trimmen en contouren scheren." },
+      { name: "Baard contouren scheren", from: "10,00", desc: "Alleen de contouren, snel klaar." },
+      { name: "Kort bijwerken van de baard", from: "9,50", desc: "Tussentijds netjes houden." },
+      { name: "Scheren van het gezicht, gehele baard", from: "17,00", desc: "Volledige gezichts-scheerbeurt." },
+    ],
+  },
+  {
+    slug: "extensions",
+    sub: [
+      { name: "Weft extensions 40 cm (per pak)", from: "190,00", desc: "Inclusief inzetten en stylingadvies." },
+      { name: "Weft extensions 45 cm", from: "220,00", desc: "" },
+      { name: "Weft extensions 50 cm", from: "245,00", desc: "" },
+      { name: "Weft extensions 55 cm", from: "275,00", desc: "" },
+      { name: "Weft extensions 60 cm", from: "295,00", desc: "" },
+      { name: "Weft extensions verwijderen", from: "40,00", desc: "Vakkundig uitzetten." },
+    ],
+  },
+];
+---
+
+<Base
+  title="Behandelingen | ProHair Vlissingen"
+  description="Een volledig overzicht van onze knip-, kleur-, permanent-, verzorgings-, heren- en extension-behandelingen aan de Kabelweg 20 in Vlissingen. Prijzen geldig vanaf 1 januari 2025."
+>
+  <section class="pt-36 md:pt-44 pb-16">
+    <div class="container-prohair">
+      <p class="eyebrow mb-5">Behandelingenoverzicht</p>
+      <h1 class="font-display text-[48px] sm:text-[80px] md:text-[112px] leading-[0.92] max-w-4xl">
+        Alles wat we<br/>
+        <em class="italic text-copper">voor je doen.</em>
+      </h1>
+      <p class="mt-8 max-w-xl text-ink-soft text-[16px] leading-[1.7]">
+        Prijzen inclusief btw, geldig vanaf 1 januari 2025. Vanaf-prijs ivm haarlengte, dikte en uitgroei. De definitieve prijs spreken we vooraf met je af tijdens een korte intake.
+      </p>
+    </div>
+  </section>
+
+  {services.map((s, i) => {
+    const sub = detailed.find((d) => d.slug === s.slug)?.sub ?? [];
+    const flipped = i % 2 === 1;
+    return (
+      <section id={s.slug} class={`py-16 md:py-24 ${i % 2 === 1 ? 'bg-cream-2' : ''}`}>
+        <div class="container-prohair">
+          <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            <div class={`lg:col-span-5 ${flipped ? 'lg:order-2' : ''}`} data-reveal>
+              <div class="flex items-center gap-3 mb-5">
+                <span class="text-[12px] uppercase tracking-[0.18em] text-ink-soft">0{i + 1}</span>
+                <span class="w-8 h-px bg-line"></span>
+                <span class="w-10 h-10 rounded-full bg-ink text-cream inline-flex items-center justify-center">
+                  <Icon name={s.icon as any} size={18}/>
+                </span>
+              </div>
+              <h2 class="font-display text-[44px] md:text-[64px] leading-[0.96]">{s.title}</h2>
+              <p class="mt-6 text-[17px] leading-[1.7] text-ink-2">{s.short}</p>
+              <p class="mt-4 text-[15px] leading-[1.7] text-ink-soft">{s.body}</p>
+              <a href="/contact" class="mt-8 inline-flex btn-primary !py-3 !px-5 !text-[13px]">Boek {s.title.toLowerCase()} <Icon name="arrow" size={14}/></a>
+            </div>
+
+            <div class={`lg:col-span-7 ${flipped ? 'lg:order-1' : ''}`} data-reveal>
+              <div class="rounded-jumbo border border-line/70 overflow-hidden bg-cream">
+                {sub.map((row, idx) => (
+                  <div class={`flex items-baseline justify-between gap-4 px-5 md:px-7 py-5 ${idx !== sub.length - 1 ? 'border-b border-line/60' : ''}`}>
+                    <div class="flex-1">
+                      <p class="font-display text-[20px] md:text-[24px] leading-tight">{row.name}</p>
+                      {row.desc && <p class="text-[13px] text-ink-soft mt-1">{row.desc}</p>}
+                    </div>
+                    <div class="text-right shrink-0">
+                      <p class="text-[10px] uppercase tracking-[0.18em] text-ink-soft">vanaf</p>
+                      <p class="font-display text-[22px] md:text-[26px] text-copper-deep leading-none">&euro;{row.from}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  })}
+
+  <section class="py-24 bg-ink text-cream">
+    <div class="container-prohair text-center max-w-3xl mx-auto" data-reveal>
+      <p class="eyebrow !text-cream/55 mb-5">Niet gevonden wat je zocht?</p>
+      <h2 class="font-display text-[40px] sm:text-[56px] md:text-[68px] leading-[0.98]">
+        De koffie staat <em class="italic text-copper-soft">al voor je klaar.</em>
+      </h2>
+      <p class="mt-6 text-cream/70 text-[16px] leading-[1.7]">
+        Bel ons even of stuur een berichtje. Wij denken graag mee, ook als je nog niet zeker weet wat je wilt.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-3 justify-center">
+        <a href="/contact" class="btn-primary !bg-cream !text-ink hover:!bg-copper-soft">Stuur een bericht <Icon name="arrow" size={16}/></a>
+        <a href="tel:+31118410637" class="btn-ghost !border-cream/30 !text-cream hover:!bg-cream hover:!text-ink"><Icon name="phone" size={16}/> 0118 410 637</a>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,97 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import Booker from "../components/Booker.astro";
+import { salon } from "../data/salon";
+---
+
+<Base
+  title="Maak een afspraak | ProHair Vlissingen"
+  description="Plan online een afspraak bij ProHair Vlissingen of bel ons direct. Kabelweg 20, geopend van maandag tot zaterdag."
+>
+  <section class="pt-36 md:pt-44 pb-10 md:pb-16">
+    <div class="container-prohair">
+      <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+        <div class="lg:col-span-7">
+          <p class="eyebrow mb-5">Afspraak inplannen</p>
+          <h1 class="font-display text-[44px] sm:text-[64px] md:text-[80px] leading-[0.94]">
+            Wij zien je <em class="italic text-copper">graag</em>.
+          </h1>
+          <p class="mt-6 text-[15px] md:text-[16px] leading-[1.65] text-ink-soft max-w-xl">
+            Doorloop vijf snelle stappen en wij bevestigen je afspraak binnen een werkdag. Liever direct contact? Bel of mail ons gewoon even.
+          </p>
+        </div>
+        <div class="lg:col-span-5 grid grid-cols-2 gap-3">
+          <a href={salon.phoneHref} class="group bg-cream-2 rounded-card p-5 border border-line/60 hover:bg-ink hover:text-cream transition-colors">
+            <div class="flex items-center gap-2 mb-3">
+              <Icon name="phone" size={16}/>
+              <span class="text-[11px] uppercase tracking-[0.18em] text-ink-soft group-hover:text-cream/55">Bellen</span>
+            </div>
+            <p class="font-display text-xl">{salon.phone}</p>
+          </a>
+          <a href={`mailto:${salon.email}`} class="group bg-cream-2 rounded-card p-5 border border-line/60 hover:bg-ink hover:text-cream transition-colors">
+            <div class="flex items-center gap-2 mb-3">
+              <Icon name="mail" size={16}/>
+              <span class="text-[11px] uppercase tracking-[0.18em] text-ink-soft group-hover:text-cream/55">Mailen</span>
+            </div>
+            <p class="font-display text-base md:text-lg break-words">{salon.email}</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-20 md:pb-28">
+    <div class="container-prohair">
+      <Booker />
+    </div>
+  </section>
+
+  <section class="pb-24 md:pb-32">
+    <div class="container-prohair">
+      <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div class="lg:col-span-5">
+          <p class="eyebrow mb-5">Liever even langslopen?</p>
+          <h2 class="font-display text-[36px] sm:text-[48px] md:text-[56px] leading-[1]">
+            Kabelweg 20,<br/>
+            <em class="italic text-copper">Vlissingen.</em>
+          </h2>
+          <div class="mt-8 space-y-5">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-cream-2 inline-flex items-center justify-center shrink-0"><Icon name="pin" size={16}/></div>
+              <div>
+                <p class="text-[11px] uppercase tracking-[0.16em] text-ink-soft">Adres</p>
+                <p class="text-[15px]">{salon.address.street}, {salon.address.zip} {salon.address.city}</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-cream-2 inline-flex items-center justify-center shrink-0"><Icon name="clock" size={16}/></div>
+              <div>
+                <p class="text-[11px] uppercase tracking-[0.16em] text-ink-soft">Openingstijden</p>
+                <ul class="text-[13px] mt-1 space-y-0.5">
+                  {salon.hours.map((h) => (
+                    <li class={`flex justify-between gap-6 ${h.closed ? 'text-ink-soft' : ''}`}>
+                      <span>{h.day}</span><span>{h.time}{h.note ? ` (${h.note})` : ''}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="rounded-jumbo overflow-hidden aspect-[4/3] md:aspect-[16/10] bg-cream-2 image-grain">
+            <iframe
+              src="https://www.google.com/maps?q=Kabelweg+20+4382+WV+Vlissingen&output=embed"
+              class="w-full h-full grayscale-[60%] contrast-105"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Route naar ProHair"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

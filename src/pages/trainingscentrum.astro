@@ -1,0 +1,130 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+
+const programs = [
+  {
+    title: "The Fundamentals",
+    duration: "Compleet",
+    level: "Basis tot gevorderd",
+    body: "Complete praktijkopleiding tot kapper volgens de Pivot Point methode. Methodisch opgebouwd, in een kleine groep, met een portfolio dat je later kunt uitbreiden en een gewaardeerd certificaat.",
+    cta: "Bekijk de opleiding",
+  },
+  {
+    title: "Open aanbod",
+    duration: "Losse modules",
+    level: "Voor gediplomeerden",
+    body: "Korte modules voor kappers die al aan het werk zijn. Op-frissings-cursussen of het aanleren van nieuwe technieken. Sluit aan op de moderne kapsalon van nu.",
+    cta: "Vraag de modulelijst aan",
+  },
+  {
+    title: "Zij-instromers welkom",
+    duration: "Geen leeftijdsgrens",
+    level: "Iedereen met ambitie",
+    body: "Iedereen die een flinke dosis ambitie en motivatie heeft is welkom. Ook wanneer je niet meer de leeftijd van 18 jaar hebt. Vraag een vrijblijvend gesprek aan om de mogelijkheden te bespreken.",
+    cta: "Plan een gesprek",
+  },
+];
+---
+
+<Base
+  title="Kappers Opleiding Zeeland | ProHair Vlissingen"
+  description="Bij ProHair leiden we via KOZeeland de volgende generatie kappers op. Complete praktijkopleiding 'The Fundamentals' in samenwerking met Pivot Point."
+>
+  <section class="pt-36 md:pt-44 pb-16 md:pb-24 bg-ink text-cream relative overflow-hidden">
+    <div aria-hidden="true" class="absolute top-0 right-0 w-[640px] h-[640px] rounded-full bg-copper-deep/30 blur-[180px]"></div>
+    <div class="container-prohair relative">
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-7">
+          <p class="eyebrow !text-cream/55 mb-5">Kappers Opleiding Zeeland</p>
+          <h1 class="font-display text-[48px] sm:text-[72px] md:text-[112px] leading-[0.92]">
+            Wij leiden <em class="italic text-copper-soft">kappers</em> op.
+          </h1>
+          <p class="mt-8 text-[16px] md:text-[18px] leading-[1.65] text-cream/70 max-w-2xl">
+            ProHair is partnersalon en opleidingsplek van Kappers Opleiding Zeeland. Samen met Pivot Point, met meer dan 50 jaar internationale ervaring in kappersopleidingen, leren we de volgende generatie vakgenoten het vak op methodische wijze.
+          </p>
+          <div class="mt-10 flex flex-wrap gap-3">
+            <a href="https://www.kozeeland.nl" target="_blank" rel="noopener" class="btn-primary !bg-cream !text-ink hover:!bg-copper-soft">Bezoek kozeeland.nl <Icon name="arrow" size={16}/></a>
+            <a href="/contact?topic=opleiding" class="btn-ghost !border-cream/30 !text-cream hover:!bg-cream hover:!text-ink">Vraag info aan</a>
+          </div>
+        </div>
+        <div class="lg:col-span-5 grid grid-cols-3 gap-3">
+          <div class="bg-cream/5 border border-cream/15 rounded-card p-5">
+            <p class="font-display text-3xl">50+</p>
+            <p class="text-[11px] uppercase tracking-[0.15em] text-cream/55 mt-2">jaar Pivot Point</p>
+          </div>
+          <div class="bg-cream/5 border border-cream/15 rounded-card p-5">
+            <p class="font-display text-3xl">Klein</p>
+            <p class="text-[11px] uppercase tracking-[0.15em] text-cream/55 mt-2">in groepsgrootte</p>
+          </div>
+          <div class="bg-cream/5 border border-cream/15 rounded-card p-5">
+            <p class="font-display text-3xl">Erkend</p>
+            <p class="text-[11px] uppercase tracking-[0.15em] text-cream/55 mt-2">door werkgevers</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 md:py-32">
+    <div class="container-prohair">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start mb-14">
+        <div class="lg:col-span-5" data-reveal>
+          <p class="eyebrow mb-5">Waarom Pivot Point</p>
+          <h2 class="font-display text-[40px] sm:text-[56px] md:text-[64px] leading-[0.98]">
+            Niets is zo belangrijk als een <em class="italic text-copper">goede basis.</em>
+          </h2>
+        </div>
+        <div class="lg:col-span-7" data-reveal>
+          <p class="text-[17px] leading-[1.7] text-ink-2 max-w-2xl">
+            Een van de sterkste troeven van deze opleiding is dat we het onderwerp methodisch aanpakken. Wij als professioneel opgeleide trainers van Pivot Point zijn gepassioneerd door het vak en scholen ons voortdurend bij.
+          </p>
+          <p class="mt-5 text-[15px] leading-[1.7] text-ink-soft max-w-2xl">
+            In een kleine groep gaan we methodisch aan de slag en bouwen we de kappersopleiding op. Niet alleen de meest betrouwbare en snelste manier om het vak te leren, we garanderen ook resultaten die door elke werkgever erkend worden.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 md:gap-5">
+        {programs.map((p, i) => (
+          <article class="bg-cream-2 rounded-card p-6 md:p-8 border border-line/60 flex flex-col" data-reveal style={`transition-delay: ${i * 80}ms`}>
+            <div class="flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-ink-soft mb-5">
+              <span>{p.duration}</span>
+              <span>{p.level}</span>
+            </div>
+            <h3 class="font-display text-[28px] md:text-[34px] leading-tight mb-3">{p.title}</h3>
+            <p class="text-[14px] text-ink-soft leading-[1.65] flex-1">{p.body}</p>
+            <a href="/contact?topic=opleiding" class="mt-7 pt-5 border-t border-line link-arrow !text-[13px]">{p.cta} <Icon name="arrow" size={13}/></a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 md:py-32 bg-cream-2">
+    <div class="container-prohair">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div class="lg:col-span-5" data-reveal>
+          <p class="eyebrow mb-5">Wat je opbouwt</p>
+          <h2 class="font-display text-[40px] sm:text-[56px] md:text-[64px] leading-[0.98]">Een <em class="italic text-copper">portfolio</em> om trots op te zijn.</h2>
+          <p class="mt-6 text-ink-soft text-[16px] leading-[1.7] max-w-md">
+            Tijdens de opleiding bouw je een portfolio op om te gebruiken bij sollicitaties en als naslagwerk voor jezelf. Na een positieve afronding behaal je een certificaat dat door werkgevers wordt erkend.
+          </p>
+          <ul class="mt-7 space-y-3 text-[14px] text-ink-2">
+            <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-copper mt-2"></span> Kleine groepen voor maximale begeleiding</li>
+            <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-copper mt-2"></span> Methodische opbouw vanuit vorm</li>
+            <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-copper mt-2"></span> Werken met L'Oreal Professionnel producten</li>
+            <li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-copper mt-2"></span> Direct praktijkervaring in de salon</li>
+          </ul>
+          <a href="/contact?topic=opleiding" class="mt-9 inline-flex btn-primary">Plan een kennismakingsgesprek <Icon name="arrow" size={16}/></a>
+        </div>
+
+        <div class="lg:col-span-7" data-reveal>
+          <div class="rounded-jumbo overflow-hidden image-grain bg-cream">
+            <img src="/team/kapsalon_prohair_kiomy.jpg" alt="Studente bij KOZeeland" class="w-full h-auto" loading="lazy"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

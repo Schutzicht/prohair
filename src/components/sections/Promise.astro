@@ -1,0 +1,34 @@
+---
+import { stats } from "../../data/salon";
+---
+
+<section class="py-24 md:py-32 relative">
+  <div class="container-prohair">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+      <div class="lg:col-span-5" data-reveal>
+        <p class="eyebrow mb-5">Onze belofte</p>
+        <h2 class="font-display text-[40px] sm:text-[56px] md:text-[64px] leading-[0.98]">
+          Wij zijn ProHair,<br/>
+          <em class="italic text-copper">jouw</em> salon.
+        </h2>
+      </div>
+      <div class="lg:col-span-7" data-reveal>
+        <p class="text-[17px] md:text-[19px] leading-[1.6] text-ink-2 max-w-2xl">
+          ProHair staat voor een persoonlijke en eerlijke benadering. Wij geven juist advies, luisteren goed naar je wensen en gaan op zoek naar de juiste vorm voor jouw coupe.
+        </p>
+        <p class="mt-6 text-[15px] leading-[1.7] text-ink-soft max-w-2xl">
+          Iedere coupe begint bij vorm. Daarom werken wij volgens de Pivot Point methode. En omdat niet alles kan of goed is voor je haar, krijg je soms ook een eerlijk "nee". Dat is wat onze klanten in 30 jaar trouw bleven maken.
+        </p>
+
+        <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6">
+          {stats.map((s) => (
+            <div class="border-t border-line pt-5">
+              <p class="font-display text-3xl md:text-4xl">{s.value}</p>
+              <p class="text-[12px] uppercase tracking-[0.15em] text-ink-soft mt-2">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

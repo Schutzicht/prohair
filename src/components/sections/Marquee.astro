@@ -1,0 +1,23 @@
+---
+const items = [
+  "Luxe voor iedereen",
+  "Pivot Point methode",
+  "L'Oreal Professionnel",
+  "Kappers Opleiding Zeeland",
+  "Eerlijk advies",
+  "Wij zijn jouw salon",
+  "De koffie staat al klaar",
+  "Sinds 2010",
+];
+---
+
+<section class="bg-ink text-cream py-7 overflow-hidden border-y border-ink-2">
+  <div class="marquee-track gap-12 font-display text-[28px] sm:text-[36px] md:text-[44px] italic whitespace-nowrap leading-none">
+    {[...items, ...items].map((item) => (
+      <span class="flex items-center gap-12 opacity-90">
+        {item}
+        <span class="text-copper-soft text-2xl opacity-60">&#x2728;</span>
+      </span>
+    ))}
+  </div>
+</section>
